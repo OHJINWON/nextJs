@@ -7,6 +7,13 @@ input:focus {
 .bgImg {
     cursor: pointer;
 }
+textarea {
+    resize: none;
+    
+}
+textarea:focus {
+    outline: none;
+}
 
 
 .contentBox {

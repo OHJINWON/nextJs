@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 export default function AddSchedule() {
 
@@ -7,13 +7,23 @@ export default function AddSchedule() {
     const [imgVal, setImgVal] = useState("off")
     const [tagLength, setTagLength] = useState(0);
     const [arr, setArray] = useState([]);
+    
+    const textareaRef = useRef(null);
+    const [text, setText] = useState();
+
+    const onChange = e => {
+        setText(e.currentTarget.value);
+        if(textareaRef && textareaRef.current) {
+            textareaRef.current.style.height = "0px";
+            const scrollHeight = textareaRef.current.scrollHeight;
+            textareaRef.current.style.height = scrollHeight + "px";
+        }
+    }
 
     const togglo_img = e => {
         const thisVal = e.target.dataset.val;
         const cN_Val = document.querySelectorAll(".center").length
         const cName = e.target.classList;
-
-        alert(cN_Val);
 
         if(cName[0] == "bgImg") {
             setCheck(true);
@@ -38,7 +48,6 @@ export default function AddSchedule() {
     return <>
         <div className='line__box'>
             <div className="line">
-                {/* 가운데 이미지 */}
                 <div  data-position="center" onClick={togglo_img}  className='bgImg center'></div>
             </div>
         </div>
@@ -48,7 +57,7 @@ export default function AddSchedule() {
                     {
                         isCheck === true ? <div>
                             <div className="treeBox ch_treeBox">
-                                <input className="treeText" type="text"/>
+                                <textarea ref={textareaRef} onChange={onChange} className="treeText" type="text"/>
                             </div>
                     <div className='line__box'>
                         <div className="line">
